@@ -1,52 +1,23 @@
-const e = require('express');
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { MongoClient } = require('mongodb')
-const uri = 'mongodb://localhost:27017';
-
-
-
-
-
-
-
+const db = require("../db");
 
 /* GET home page. 
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 }); */
 
-router.post('/signup',function(req,res){
-
- console.log(req.body)
-
-  res.send('file send')
-  
-
-})
-
-
-
-async function connectToDB(err,dataFile) {
-  const client = new MongoClient(uri);
-
+router.post("/signup", async function (req, res) {
   try {
-    
-    await client.connect();
-    const db = client.db('sample').collection('user').insertOne()
-    console.log('dataconnected',db.databaseName);
-
-
-    client.close();
-    
+    const user = req.body;
+    console.log(user);
+    const collection = db.collection("user");
+    const save = await collection.insertOne(user);
+    res.json(save);
   } catch (err) {
-    console.log('error', err);
+    console.error("Error", err);
+    res.status(500).json({ error: "Something went wrong. Please try again" });
   }
-  
-  
-}
-
-
-connectToDB();  
+});
 
 module.exports = router;
