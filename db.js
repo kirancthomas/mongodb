@@ -9,8 +9,9 @@ let db;
 async function connect() {
   try {
     await client.connect();
-    db = client.db();
+    db = client.db('sample').collection('user');
     console.log("Database connected!");
+  
   } catch (err) {
     console.error("Error", err);
   }
