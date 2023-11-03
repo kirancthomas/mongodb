@@ -16,7 +16,7 @@ router.post("/signup", async function (req, res) {
     res.json(save);
   } catch (err) {
     console.error("Error", err);
-    res.status(500).json({ error: "Something went wrong. Please try again" });
+    res.status(404).json({ error: "Something went wrong. Please try again" });
   }
 });
 
